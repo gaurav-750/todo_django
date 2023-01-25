@@ -1,22 +1,23 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./App.css";
 
-// const list = [
-//   {
-//     id: 1,
-//     title: "First Todo",
-//     body: "This is my first todo task of the day.",
-//   },
-//   {
-//     id: 2,
-//     title: "Study Django with APIs",
-//     body: "I need to study this book by William Vincent so that I can learn drf.",
-//   },
-//   { id: 3, title: "Watch", body: "Add new cell to my black watch" },
-// ];
-
 const App = () => {
+  const [list, setList] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://127.0.0.1:8000/api/")
+      .then((res) => {
+        const todos = res.data;
+        setList(todos);
+      })
+      .catch((err) => {
+        console.log("ERROR:", err);
+      });
+  }, []);
+
+  // return
   return (
     <div>
       {list.map((todo) => (
